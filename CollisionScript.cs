@@ -31,6 +31,10 @@ public class CollisionScript : MonoBehaviour
         float distance = Vector3.Distance(this.transform.position, t_pos);
         // Debug.Log("distance : "+ distance);
 
+        // 接触している物体の半径（R）を取得
+        float R = t.transform.localScale.x*0.5f;
+        // Debug.Log(R);
+
         // 中心間距離に応じて接触判定を更新
         if(distance<collider_radius){
             collision_flag=true;
