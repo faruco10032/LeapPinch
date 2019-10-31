@@ -26,7 +26,7 @@ public class PinchScript : MonoBehaviour
         // 球の接触判定を取得
         if(thumb_script.collision_flag&&index_script.collision_flag&&
         (finger_distance<(index_script.collider_radius+thumb_script.collider_radius+2.0*thumb_script.R))){//親指と人差し指両方で触れており，ふたつの距離が接触物体の直径以下の場合
-            Debug.Log("pinch now");
+            // Debug.Log("pinch now");
             //2点間の中心を計算
             Vector3 centor_pos = (thumb_pos+index_pos)*0.5f;
 
