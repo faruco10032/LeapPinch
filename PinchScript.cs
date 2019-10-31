@@ -45,7 +45,7 @@ public class PinchScript : MonoBehaviour
             // pinch_object_positionが存在する場合，そこからオブジェクトを取り出しpinch_object_positionは消しておく
             GameObject obj=GameObject.Find("pinch_object_position");
             if(!(obj==null)){
-                Debug.Log("detach children");
+                // Debug.Log("detach children");
                 obj.transform.transform.DetachChildren();
                 Destroy(obj);
             }
