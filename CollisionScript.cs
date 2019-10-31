@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class CollisionScript : MonoBehaviour
 {
-    public float collider_radius = 0.02f;
+    public float collider_radius = 0.015f;
     public bool collision_flag = false;
     public GameObject collision_object;
+    public float R;
 
     // Start is called before the first frame update
     void Start()
@@ -18,6 +19,10 @@ public class CollisionScript : MonoBehaviour
     void Update()
     {
         // Debug.Log(collision_flag);
+    }
+
+    void OnTriggerEnter(){// 接触した瞬間
+        collision_flag = true;
     }
 
     void OnTriggerStay(Collider t){//なにかに接触している間呼ばれ続ける．接触している物体をtとして格納
@@ -32,18 +37,12 @@ public class CollisionScript : MonoBehaviour
         // Debug.Log("distance : "+ distance);
 
         // 接触している物体の半径（R）を取得
-        float R = t.transform.localScale.x*0.5f;
-        // Debug.Log(R);
+        R = t.transform.localScale.x*0.5f;
 
-        // 中心間距離に応じて接触判定を更新
-        if(distance<collider_radius){
-            collision_flag=true;
-        }else{
-            collision_flag=false;
-        }
     }
 
     void OnTriggerExit(){//接触判定が外れたら呼ばれる
+        collision_flag = false;// 物体から離れたらフラグを折る
         collision_object = null;//物体から離れたらGameobjectをクリア
     }
 }
