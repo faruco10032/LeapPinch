@@ -26,9 +26,26 @@ public class PinchScript : MonoBehaviour
             Vector3 index_pos = index.transform.position;
             //2点間の中心を計算
             Vector3 centor_pos = (thumb_pos+index_pos)*0.5f;
-            //親指で接触してる物体の位置を2点間の中心へ移動
-            thumb_script.collision_object.transform.position = centor_pos;
 
+            // 座標を示す空のGameobjectがなければ2点間の中心座標に空のGameobjectを作り，親指と触れている物体をその子にする
+            GameObject obj = GameObject.Find("pinch_object_position");
+            if(obj==null){
+                GameObject pinch_object_position = new GameObject("pinch_object_position");
+                pinch_object_position.transform.position = centor_pos;
+                thumb_script.collision_object.transform.parent = pinch_object_position.transform;
+            }else{
+                // 物体の位置を表すGameobjectの位置を2点間の中心へ移動
+                obj.transform.position = centor_pos;
+            } 
+
+        }else{
+            // pinch_object_positionが存在する場合，そこからオブジェクトを取り出しpinch_object_positionは消しておく
+            GameObject obj=GameObject.Find("pinch_object_position");
+            if(!(obj==null)){
+                Debug.Log("detach children");
+                obj.transform.transform.DetachChildren();
+                Destroy(obj);
+            }
         }
 
     }
