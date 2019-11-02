@@ -36,7 +36,7 @@ public class CollisionScript : MonoBehaviour
         float distance = Vector3.Distance(this.transform.position, t_pos);
         // Debug.Log("distance : "+ distance);
 
-        // 接触している物体の半径（R）を取得
+        // 接触している物体のX軸を取得（R）を取得
         R = t.transform.localScale.x*0.5f;
 
     }
