@@ -1,2 +1,4 @@
 # Unityのmetaファイルは要らない
 *.meta
+# Fbxデータは載せない
+*.fbx
