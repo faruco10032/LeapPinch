@@ -9,6 +9,10 @@ public class PinchScript : MonoBehaviour
     CollisionScript thumb_script;
     CollisionScript index_script;
 
+    // public GameObject collision_object;
+
+    private bool pinch_flag = false;
+
     // Start is called before the first frame update
     void Start(){
         //Gameobjectのスクリプトコンポーネントを取得
@@ -23,9 +27,13 @@ public class PinchScript : MonoBehaviour
         Vector3 index_pos = index.transform.position;
         // 指の距離を取得
         float finger_distance = Vector3.Distance(thumb_pos, index_pos);
-        // 球の接触判定を取得
+
+        GameObject collision_object = thumb_script.collision_object;
+
+        // 球の接触判定を取得．つまんでる間実行する．
         if(thumb_script.collision_flag&&index_script.collision_flag&&
         (finger_distance<(index_script.collider_radius+thumb_script.collider_radius+2.0*thumb_script.R))){//親指と人差し指両方で触れており，ふたつの距離が接触物体の直径以下の場合
+            pinch_flag = true;
             // Debug.Log("pinch now");
             //2点間の中心を計算
             Vector3 centor_pos = (thumb_pos+index_pos)*0.5f;
@@ -41,14 +49,33 @@ public class PinchScript : MonoBehaviour
                 obj.transform.position = centor_pos;
             } 
 
-        }else{
-            // pinch_object_positionが存在する場合，そこからオブジェクトを取り出しpinch_object_positionは消しておく
-            GameObject obj=GameObject.Find("pinch_object_position");
-            if(!(obj==null)){
+            // つまみ物体のGravityが有効だったら，つまんでる物体のGravityを切る
+            // つまんでいる物体のRigidbodyを取得
+            // Rigidbody rb = thumb_script.collision_object.GetComponent<Rigidbody>();
+            Rigidbody _rb = thumb_script.collision_object.GetComponent<Rigidbody>();
+            _rb.useGravity = false;
+
+
+        }else{ // つまんでいないとき
+            // 離すときに元の状態に戻す処理
+            if(pinch_flag==true){
+                // pinch_object_positionが存在する場合，そこからオブジェクトを取り出しpinch_object_positionは消しておく
+                GameObject obj=GameObject.Find("pinch_object_position");
+
+                // オブジェクト（つまみ物体）にGravityを入れておく
+                // Rigidbody rb = obj.transform.FindChild("Child").gameObject.GetComponent<Rigidbody>();
+                Rigidbody _rb = thumb_script.collision_object.GetComponent<Rigidbody>();
+                _rb.useGravity=true;
+
                 // Debug.Log("detach children");
+                // 子から解除しておく
                 obj.transform.transform.DetachChildren();
                 Destroy(obj);
+
+                collision_object = null;
+                pinch_flag = false;
             }
+
         }
 
     }
