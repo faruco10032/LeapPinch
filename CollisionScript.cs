@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CollisionScript : MonoBehaviour
 {
-    public float collider_radius = 0.015f;
+    public float collider_radius = 0.02f;
     public bool collision_flag = false;
     public GameObject collision_object;
     public float R;
