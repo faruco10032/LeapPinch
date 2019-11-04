@@ -66,9 +66,12 @@ public class PinchScript : MonoBehaviour
 
             // つまみ物体のGravityが有効だったら，つまんでる物体のGravityを切る
             // つまんでいる物体のRigidbodyを取得
-            // Rigidbody rb = thumb_script.collision_object.GetComponent<Rigidbody>();
             Rigidbody rb = pinch_object.GetComponent<Rigidbody>();
             rb.useGravity = false;
+
+            // つまんでる間は慣性力を受けないようにする
+            rb.velocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
 
 
         }else{ // つまんでいないとき
