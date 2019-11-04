@@ -17,6 +17,6 @@ Leapmotionの指に接触判定用のsphereを入れ，そのsphereの座標，�
 
 isEnablePinchタグを持っている物体のみつまめます．
 
-
+Leapmotionのハンドモデルからはcolliderを無効にしておいてください．
 ## 導入
 
