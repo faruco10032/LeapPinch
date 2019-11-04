@@ -62,9 +62,9 @@ public class PinchScript : MonoBehaviour
                 // 物体のつまみ位置を表すGameobjectの回転を指と同期させる
                 obj.transform.localEulerAngles = diff_rot;
 
-                Debug.Log("first_rot : "+first_rot);
-                Debug.Log("thumb_rot : "+thumb.transform.eulerAngles);
-                Debug.Log("diff_rot  : "+diff_rot);
+                // Debug.Log("first_rot : "+first_rot);
+                // Debug.Log("thumb_rot : "+thumb.transform.eulerAngles);
+                // Debug.Log("diff_rot  : "+diff_rot);
             } 
 
             // つまみ物体のGravityが有効だったら，つまんでる物体のGravityを切る
