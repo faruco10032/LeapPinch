@@ -35,7 +35,8 @@ public class PinchScript : MonoBehaviour
 
         // 球の接触判定を取得．つまんでる間実行する．
         if(thumb_script.collision_flag&&index_script.collision_flag&&
-        (finger_distance<(index_script.collider_radius+thumb_script.collider_radius+2.0*thumb_script.R))){//親指と人差し指両方で触れており，ふたつの距離が接触物体の直径以下の場合
+        (finger_distance<(index_script.collider_radius+thumb_script.collider_radius+2.0*thumb_script.R))&&
+        (thumb_script.collision_object.gameObject.tag == "isEnablePinch")){//親指と人差し指両方で触れており，ふたつの距離が接触物体の直径以下でつまみ可能タグを持っているの場合
             // つまみオブジェクトを更新
             pinch_object = thumb_script.collision_object;
             pinch_flag = true;
