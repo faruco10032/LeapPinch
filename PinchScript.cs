@@ -28,7 +28,7 @@ public class PinchScript : MonoBehaviour
         // 指の距離を取得
         float finger_distance = Vector3.Distance(thumb_pos, index_pos);
 
-        GameObject collision_object = thumb_script.collision_object;
+        GameObject _collision_object = thumb_script.collision_object;
 
         // 球の接触判定を取得．つまんでる間実行する．
         if(thumb_script.collision_flag&&index_script.collision_flag&&
@@ -52,19 +52,23 @@ public class PinchScript : MonoBehaviour
             // つまみ物体のGravityが有効だったら，つまんでる物体のGravityを切る
             // つまんでいる物体のRigidbodyを取得
             // Rigidbody rb = thumb_script.collision_object.GetComponent<Rigidbody>();
-            Rigidbody _rb = thumb_script.collision_object.GetComponent<Rigidbody>();
+            Rigidbody _rb = _collision_object.GetComponent<Rigidbody>();
             _rb.useGravity = false;
 
 
         }else{ // つまんでいないとき
             // 離すときに元の状態に戻す処理
             if(pinch_flag==true){
+                pinch_flag = false;
                 // pinch_object_positionが存在する場合，そこからオブジェクトを取り出しpinch_object_positionは消しておく
                 GameObject obj=GameObject.Find("pinch_object_position");
 
                 // オブジェクト（つまみ物体）にGravityを入れておく
                 // Rigidbody rb = obj.transform.FindChild("Child").gameObject.GetComponent<Rigidbody>();
-                Rigidbody _rb = thumb_script.collision_object.GetComponent<Rigidbody>();
+                Debug.Log("Gravity false");
+                Debug.Log("pinch flag : "+pinch_flag);
+                
+                Rigidbody _rb = _collision_object.GetComponent<Rigidbody>();
                 _rb.useGravity=true;
 
                 // Debug.Log("detach children");
@@ -72,8 +76,10 @@ public class PinchScript : MonoBehaviour
                 obj.transform.transform.DetachChildren();
                 Destroy(obj);
 
-                collision_object = null;
-                pinch_flag = false;
+                _collision_object = null;
+                // pinch_flag = false;
+            }else{
+                Debug.Log("dont pinch");
             }
 
         }
