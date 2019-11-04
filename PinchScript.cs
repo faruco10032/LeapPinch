@@ -11,6 +11,9 @@ public class PinchScript : MonoBehaviour
 
     // public GameObject collision_object;
 
+    // つまんだ瞬   間の指の回転量
+    Vector3 first_rot;
+
     private bool pinch_flag = false;
 
     // Start is called before the first frame update
@@ -33,6 +36,8 @@ public class PinchScript : MonoBehaviour
         // 球の接触判定を取得．つまんでる間実行する．
         if(thumb_script.collision_flag&&index_script.collision_flag&&
         (finger_distance<(index_script.collider_radius+thumb_script.collider_radius+2.0*thumb_script.R))){//親指と人差し指両方で触れており，ふたつの距離が接触物体の直径以下の場合
+            // つまみオブジェクトを更新
+            pinch_object = thumb_script.collision_object;
             pinch_flag = true;
             // Debug.Log("pinch now");
             //2点間の中心を計算
@@ -44,9 +49,22 @@ public class PinchScript : MonoBehaviour
                 GameObject pinch_object_position = new GameObject("pinch_object_position");
                 pinch_object_position.transform.position = centor_pos;
                 thumb_script.collision_object.transform.parent = pinch_object_position.transform;
+
+                // つまんだ瞬間の指の角度を取得
+                first_rot = thumb.transform.eulerAngles;
+                Debug.Log("OnPinch");
             }else{
-                // 物体の位置を表すGameobjectの位置を2点間の中心へ移動
+                // 物体のつまみ位置を表すGameobjectの位置を2点間の中心へ移動
                 obj.transform.position = centor_pos;
+
+                // つまんだ瞬間からの指の回転量を計算
+                Vector3 diff_rot = -first_rot + thumb.transform.eulerAngles;
+                // 物体のつまみ位置を表すGameobjectの回転を指と同期させる
+                obj.transform.localEulerAngles = diff_rot;
+
+                Debug.Log("first_rot : "+first_rot);
+                Debug.Log("thumb_rot : "+thumb.transform.eulerAngles);
+                Debug.Log("diff_rot  : "+diff_rot);
             } 
 
             // つまみ物体のGravityが有効だったら，つまんでる物体のGravityを切る
@@ -75,7 +93,7 @@ public class PinchScript : MonoBehaviour
                 obj.transform.transform.DetachChildren();
                 Destroy(obj);
 
-                collision_object = null;
+                pinch_object = null;
                 pinch_flag = false;
             }else{
                 // Debug.Log("dont pinch");
