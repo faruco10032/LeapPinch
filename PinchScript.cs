@@ -54,19 +54,15 @@ public class PinchScript : MonoBehaviour
                 // つまんだ瞬間の指の角度を取得
                 first_rot = thumb.transform.eulerAngles;
                 Debug.Log("OnPinch");
-            }else{
-                // 物体のつまみ位置を表すGameobjectの位置を2点間の中心へ移動
-                obj.transform.position = centor_pos;
+            }
 
-                // つまんだ瞬間からの指の回転量を計算
-                Vector3 diff_rot = -first_rot + thumb.transform.eulerAngles;
-                // 物体のつまみ位置を表すGameobjectの回転を指と同期させる
-                obj.transform.localEulerAngles = diff_rot;
+            // 物体のつまみ位置を表すGameobjectの位置を2点間の中心へ移動
+            obj.transform.position = centor_pos;
 
-                // Debug.Log("first_rot : "+first_rot);
-                // Debug.Log("thumb_rot : "+thumb.transform.eulerAngles);
-                // Debug.Log("diff_rot  : "+diff_rot);
-            } 
+            // つまんだ瞬間からの指の回転量を計算
+            Vector3 diff_rot = -first_rot + thumb.transform.eulerAngles;
+            // 物体のつまみ位置を表すGameobjectの回転を指と同期させる
+            obj.transform.localEulerAngles = diff_rot;
 
             // つまみ物体のGravityが有効だったら，つまんでる物体のGravityを切る
             // つまんでいる物体のRigidbodyを取得
