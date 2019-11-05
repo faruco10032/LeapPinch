@@ -52,7 +52,7 @@ public class PinchScript : MonoBehaviour
                 thumb_script.collision_object.transform.parent = pinch_object_position.transform;
 
                 // つまんだ瞬間の指の角度を取得
-                first_rot = thumb.transform.eulerAngles;
+                first_rot = index.transform.eulerAngles;
                 Debug.Log("OnPinch");
             }
 
@@ -60,7 +60,7 @@ public class PinchScript : MonoBehaviour
             obj.transform.position = centor_pos;
 
             // つまんだ瞬間からの指の回転量を計算
-            Vector3 diff_rot = -first_rot + thumb.transform.eulerAngles;
+            Vector3 diff_rot = -first_rot + index.transform.eulerAngles;
             // 物体のつまみ位置を表すGameobjectの回転を指と同期させる
             obj.transform.localEulerAngles = diff_rot;
 
