@@ -44,11 +44,14 @@ public class CollisionScript : MonoBehaviour
         }
     }
 
-    void OnTriggerExit(){//接触判定が外れたら呼ばれる
+    void OnTriggerExit(Collider t){//接触判定が外れたら呼ばれる
         if(collision_flag){
-            // 物体から離れたら重力を入れる
-            Rigidbody rb = collision_object.GetComponent<Rigidbody>();
-            rb.useGravity = true;
+            if(t.gameObject.tag == "isEnablePinch")
+            {
+                // 物体から離れたら重力を入れる
+                Rigidbody rb = collision_object.GetComponent<Rigidbody>();
+                rb.useGravity = true;
+            }
             
             collision_flag = false;// 物体から離れたらフラグを折る
             collision_object = null;//物体から離れたらGameobjectをクリア
