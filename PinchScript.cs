@@ -6,6 +6,7 @@ public class PinchScript : MonoBehaviour
 {
     public GameObject thumb;
     public GameObject index;
+    public GameObject rotation_ref_obj;
     CollisionScript thumb_script;
     CollisionScript index_script;
 
@@ -14,7 +15,7 @@ public class PinchScript : MonoBehaviour
     // つまんだ瞬   間の指の回転量
     Vector3 first_rot;
 
-    private bool pinch_flag = false;
+    public bool pinch_flag = false;
 
     // Start is called before the first frame update
     void Start(){
@@ -51,8 +52,8 @@ public class PinchScript : MonoBehaviour
                 pinch_object_position.transform.position = centor_pos;
                 thumb_script.collision_object.transform.parent = pinch_object_position.transform;
 
-                // つまんだ瞬間の指の角度を取得
-                first_rot = index.transform.eulerAngles;
+                // つまんだ瞬間の角度を取得
+                first_rot = rotation_ref_obj.transform.eulerAngles;
                 Debug.Log("OnPinch");
             }
 
@@ -60,7 +61,7 @@ public class PinchScript : MonoBehaviour
             obj.transform.position = centor_pos;
 
             // つまんだ瞬間からの指の回転量を計算
-            Vector3 diff_rot = -first_rot + index.transform.eulerAngles;
+            Vector3 diff_rot = -first_rot + rotation_ref_obj.transform.eulerAngles;
             // 物体のつまみ位置を表すGameobjectの回転を指と同期させる
             obj.transform.localEulerAngles = diff_rot;
 
@@ -68,6 +69,8 @@ public class PinchScript : MonoBehaviour
             // つまんでいる物体のRigidbodyを取得
             Rigidbody rb = pinch_object.GetComponent<Rigidbody>();
             rb.useGravity = false;
+            // Debug.Log("diff_rot : "+diff_rot);
+            // Debug.Log("obj_rot  : "+obj.transform.localEulerAngles);
 
             // つまんでる間は慣性力を受けないようにする
             rb.velocity = Vector3.zero;
