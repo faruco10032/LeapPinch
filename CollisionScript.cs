@@ -8,6 +8,7 @@ public class CollisionScript : MonoBehaviour
     public bool collision_flag = false;
     public GameObject collision_object;
     public float R;
+    public float distance;
 
     // Start is called before the first frame update
     void Start()
@@ -36,7 +37,7 @@ public class CollisionScript : MonoBehaviour
         Vector3 t_pos = t.transform.position;
 
         // 接触している物体と自身の距離を計算
-        float distance = Vector3.Distance(this.transform.position, t_pos);
+        distance = Vector3.Distance(this.transform.position, t_pos);
         // Debug.Log("distance : "+ distance);
 
         // 接触している物体のX軸を取得（R）を取得→のちほど大きさに変更する．rayを使って実装できないかな？
